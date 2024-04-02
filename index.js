@@ -1,4 +1,4 @@
-const ROCK = "ROCK";
+/* const ROCK = "ROCK";
 const PAPER = "PAPER";
 const SCISSORS = "SCISSORS";
 const DEFAULT_USER_CHOICE = "ROCK";
@@ -66,3 +66,57 @@ const getWinner = (pChoice, cChoice) => {
     ? RESULT_PLAYERS_WINS
     : RESULT_COMPUTER_WINS;
 };
+ */
+
+//Alternative approach 
+
+const playerDisplay = document.getElementById('playerSelection');
+const computerDisplay = document.getElementById('computerSelection');
+const winnerResult = document.getElementById('result');
+let playerScoreDisplay = document.getElementById('playerScore');
+let computerScoreDisplay = document.getElementById('computerScore');
+
+const choices = ["rock", "paper", "scissors"];
+let playerScores = 0;
+let computerScores = 0;
+
+playGame = (playerChoice) => {
+  let computerChoice = choices[Math.floor(Math.random() * 3)];
+  let resultDisplay = "";
+
+  if (playerChoice === computerChoice) {
+    resultDisplay = "It's a TIE!"
+  }
+  else {
+    switch (playerChoice) {
+      case "rock":
+        resultDisplay = (computerChoice === "scissors") ? 'YOU WON!' : 'YOU LOST!';
+        break;
+      case "paper":
+        resultDisplay = (computerChoice === "rock") ? 'YOU WON!' : 'YOU LOST!';
+        break;
+      case "scissors":
+        resultDisplay = (computerChoice === "paper") ? 'YOU WON!' : 'YOU LOST!';
+        break;
+    }
+  }
+
+  playerDisplay.textContent =`Player : ${playerChoice}`;
+  computerDisplay.textContent =`Computer : ${computerChoice}`;
+  winnerResult.textContent = resultDisplay;
+
+  winnerResult.classList.remove("greenText", "redText");
+
+  switch(resultDisplay){
+    case 'YOU WON!':
+      winnerResult.classList.add("greenText");
+      playerScores++;
+      playerScoreDisplay.textContent = playerScores;
+      break;
+      case 'YOU LOST!':
+        winnerResult.classList.add("redText");
+        computerScores++;
+        computerScoreDisplay.textContent = computerScores;
+        break;
+  }
+}
